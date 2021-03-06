@@ -74,10 +74,10 @@ def featured_image(browser):
     try:
         # Find the relative image url
         img_url_rel = img_soup.find('img', class_='fancybox-image').get('src')
-     
-     except AttributeError:
-        return None
 
+    except AttributeError:
+        return None 
+        
     # Use the base URL to create an absolute URL
     img_url = f'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/{img_url_rel}'
     
