@@ -7,14 +7,15 @@ import datetime as dt
 # Create scrape all function
 def scrape_all():
     # Initiate headless driver for deployment
-    browser = Browser("chrome", executable_path="chromedriver", headless=True)
+    executable_path = {'executable_path': '/Users/aaranisivasekaram/.wdm/drivers/chromedriver/mac64/88.0.4324.96/chromedriver'}
+    browser = Browser("chrome", **executable_path, headless=True)
 
-    news_title, news_p = mars_news(browser)
+    news_title, news_paragraph = mars_news(browser)
 
     # Run all scraping functions and store results in a dictionary
     data = {
         "news_title": news_title,
-        "news_paragraph": news_p,
+        "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
         "last_modified": dt.datetime.now()
@@ -47,12 +48,12 @@ def mars_news(browser):
         news_title = slide_elem.find("div", class_='content_title').get_text()
 
         # Use the parent element to find the paragraph text
-        news_p = slide_elem.find('div', class_="article_teaser_body").get_text()
+        news_paragraph = slide_elem.find('div', class_="article_teaser_body").get_text()
     
     except AttributeError:
         return None, None
 
-    return news_title, news_p
+    return news_title, news_paragraph
 
 ### Featured images
 
